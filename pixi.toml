@@ -1,0 +1,30 @@
+[workspace]
+name = "lab3_noise"
+version = "0.1.0"
+description = "DVC pipeline for phoneme ASR"
+authors = ["Yixuan ZHU <m2zhuyixuan@gmail.com>"]
+channels = ["conda-forge"] 
+platforms = ["osx-arm64", "linux-64"] 
+
+[pypi-dependencies]
+soundfile = "*"
+torch = "*"
+phonemizer = "*"
+
+[dependencies]
+dvc = "*"
+git = "*"
+
+python = "3.11.*"
+pip = "*"
+
+numpy = "*"
+pandas = "*"
+scipy = "*"
+librosa = "*"
+
+transformers = "*"
+pyyaml = "*"
+matplotlib = "*"
+
+tqdm = "*"
