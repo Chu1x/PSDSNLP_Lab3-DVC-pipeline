@@ -1,0 +1,26 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 98052bfdff5a55027f469bf38020f8b1.dir
+      size: 443489
+      nfiles: 7
+    - path: src/prepare.py
+      hash: md5
+      md5: 772c87d0918c29e771da41b451263718
+      size: 4758
+    params:
+      params.yaml:
+        base.languages:
+        - en
+        prepare.output_dir: data/manifests
+        prepare.raw_data_dir: data/raw
+    outs:
+    - path: data/manifests
+      hash: md5
+      md5: f1a69ff5e4129ac0b45fdaa9a00497b4.dir
+      size: 514
+      nfiles: 1

@@ -1,0 +1,12 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+      - src/prepare.py
+      - data/raw
+    params:
+      - base.languages
+      - prepare.raw_data_dir
+      - prepare.output_dir
+    outs:
+      - data/manifests

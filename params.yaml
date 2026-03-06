@@ -1,0 +1,7 @@
+base:
+  languages: ["en"]
+  seed: 42
+
+prepare:
+  raw_data_dir: "data/raw"
+  output_dir: "data/manifests"
