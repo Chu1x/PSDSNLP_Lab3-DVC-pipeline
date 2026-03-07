@@ -5,9 +5,9 @@ stages:
     deps:
     - path: data/raw
       hash: md5
-      md5: 98052bfdff5a55027f469bf38020f8b1.dir
-      size: 443489
-      nfiles: 7
+      md5: c36d5e4797466239e4159856856438d8.dir
+      size: 553724
+      nfiles: 10
     - path: src/prepare.py
       hash: md5
       md5: c8a5052ea09598e570e069f3e4581520
@@ -16,22 +16,23 @@ stages:
       params.yaml:
         base.languages:
         - en
+        - fr
         prepare.output_dir: data/manifests
         prepare.raw_data_dir: data/raw
     outs:
     - path: data/manifests
       hash: md5
-      md5: f1a69ff5e4129ac0b45fdaa9a00497b4.dir
-      size: 514
-      nfiles: 1
+      md5: debfa92bca7a9f97296674cb05a42488.dir
+      size: 783
+      nfiles: 2
   augment:
     cmd: python src/augment.py
     deps:
     - path: data/manifests
       hash: md5
-      md5: f1a69ff5e4129ac0b45fdaa9a00497b4.dir
-      size: 514
-      nfiles: 1
+      md5: debfa92bca7a9f97296674cb05a42488.dir
+      size: 783
+      nfiles: 2
     - path: src/augment.py
       hash: md5
       md5: a791e3b5678441eb45c6fffdaf4819ac
@@ -50,30 +51,31 @@ stages:
         - -5
         base.languages:
         - en
+        - fr
     outs:
     - path: data/audio_noisy
       hash: md5
-      md5: cba3a5cceeab5670beed9a46056f1b62.dir
-      size: 1387150
-      nfiles: 10
+      md5: f881bd1493fe8e049ab407f046e05546.dir
+      size: 1907510
+      nfiles: 15
     - path: data/manifests_noisy
       hash: md5
-      md5: 5104b6b4b7846493583700c3525a0219.dir
-      size: 2698
-      nfiles: 5
+      md5: 34c2f448a5a747cba86130891931b489.dir
+      size: 4107
+      nfiles: 10
   transcribe:
     cmd: python src/transcribe.py
     deps:
     - path: data/manifests
       hash: md5
-      md5: f1a69ff5e4129ac0b45fdaa9a00497b4.dir
-      size: 514
-      nfiles: 1
+      md5: debfa92bca7a9f97296674cb05a42488.dir
+      size: 783
+      nfiles: 2
     - path: data/manifests_noisy
       hash: md5
-      md5: 5104b6b4b7846493583700c3525a0219.dir
-      size: 2698
-      nfiles: 5
+      md5: 34c2f448a5a747cba86130891931b489.dir
+      size: 4107
+      nfiles: 10
     - path: src/transcribe.py
       hash: md5
       md5: 49781bde25faa0079b47132d867ea46f
@@ -82,6 +84,7 @@ stages:
       params.yaml:
         base.languages:
         - en
+        - fr
         transcribe.input_dirs:
         - data/manifests
         - data/manifests_noisy
@@ -90,17 +93,17 @@ stages:
     outs:
     - path: data/predictions
       hash: md5
-      md5: 7baf5dfc50e66a099706ac258da0d41f.dir
-      size: 3680
-      nfiles: 6
+      md5: e280bc21ee2367dece9ce9af55752da3.dir
+      size: 5572
+      nfiles: 12
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: data/predictions
       hash: md5
-      md5: 7baf5dfc50e66a099706ac258da0d41f.dir
-      size: 3680
-      nfiles: 6
+      md5: e280bc21ee2367dece9ce9af55752da3.dir
+      size: 5572
+      nfiles: 12
     - path: src/evaluate.py
       hash: md5
       md5: 6e0727e2c6bd996694fbc8b4c75e0a94
@@ -109,15 +112,16 @@ stages:
       params.yaml:
         base.languages:
         - en
+        - fr
         evaluate.input_dir: data/predictions
         evaluate.metrics_file: metrics.json
         evaluate.plots_dir: plots
     outs:
     - path: metrics.json
       hash: md5
-      md5: 0709e4b78fbab31cc7dbbc9a119cf7ef
-      size: 442
+      md5: 253b74fe70efb3c86151523789399076
+      size: 819
     - path: plots/per_vs_noise.png
       hash: md5
-      md5: 6f374ef68d5a5fe7eb8fd347db60e296
-      size: 38016
+      md5: ededc66b7caf32960b0b75f84e876190
+      size: 38369

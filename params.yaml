@@ -1,5 +1,5 @@
 base:
-  languages: ["en"]
+  languages: ["en", "fr"]
   seed: 42
 
 prepare:
