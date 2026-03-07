@@ -114,28 +114,53 @@ def plot_results(all_results, params):
     
     plt.figure(figsize=(10, 6))
     
+    # Data structure to hold PERs for each SNR across all languages
+    # snr_map = { 20: [0.1, 0.2], 10: [0.3, 0.4] ... }
+    snr_map = {}
+
+    # 1. Plot individual languages
     for lang, data in all_results.items():
-        # Extract SNR and PER, sort by SNR
-        # Filter out 'clean' (inf) for the line plot to avoid scaling issues, 
-        # or plot it separately. Let's plot numeric SNRs.
         points = []
         for name, metrics in data.items():
-            if metrics['snr'] != float('inf'):
-                points.append((metrics['snr'], metrics['per']))
-        
-        points.sort(key=lambda x: x[0]) # Sort by SNR low to high
-        
-        if not points:
-            continue
+            snr = metrics['snr']
+            per = metrics['per']
             
-        snrs, pers = zip(*points)
-        plt.plot(snrs, pers, marker='o', label=f"Language: {lang}")
+            # Skip 'clean' (inf) for plotting or handle separately
+            if snr != float('inf'):
+                points.append((snr, per))
+                
+                # Collect for mean calculation
+                if snr not in snr_map:
+                    snr_map[snr] = []
+                snr_map[snr].append(per)
+        
+        # Sort by SNR
+        points.sort(key=lambda x: x[0])
+        
+        if points:
+            snrs, pers = zip(*points)
+            plt.plot(snrs, pers, marker='o', label=f"Language: {lang}", alpha=0.6)
+
+    # 2. Calculate and Plot Cross-language Mean
+    if snr_map:
+        mean_points = []
+        for snr, per_list in snr_map.items():
+            mean_per = sum(per_list) / len(per_list)
+            mean_points.append((snr, mean_per))
+        
+        # Sort by SNR
+        mean_points.sort(key=lambda x: x[0])
+        
+        mean_snrs, mean_pers = zip(*mean_points)
+        # Plot mean with a thicker, distinct line (e.g., Black Dashed)
+        plt.plot(mean_snrs, mean_pers, color='black', linewidth=2.5, linestyle='--', marker='s', label="Cross-Language Mean")
 
     plt.title("Phoneme Error Rate (PER) vs Noise Level (SNR)")
     plt.xlabel("SNR (dB)")
-    plt.ylabel("PER")
-    plt.grid(True)
+    plt.ylabel("PER (Lower is Better)")
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
     plt.legend()
+    
     plt.savefig(output_plot)
     print(f"Plot saved to {output_plot}")
 
