@@ -10,3 +10,19 @@ stages:
       - prepare.output_dir
     outs:
       - data/manifests
+
+  augment:
+    cmd: python src/augment.py
+    deps:
+      - src/augment.py
+      - data/manifests    
+    params:
+      - base.languages
+      - augment.snr_levels
+      - augment.seed
+      - augment.input_manifest_dir
+      - augment.output_manifest_dir
+      - augment.output_audio_dir
+    outs:
+      - data/manifests_noisy 
+      - data/audio_noisy     

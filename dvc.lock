@@ -24,3 +24,40 @@ stages:
       md5: f1a69ff5e4129ac0b45fdaa9a00497b4.dir
       size: 514
       nfiles: 1
+  augment:
+    cmd: python src/augment.py
+    deps:
+    - path: data/manifests
+      hash: md5
+      md5: f1a69ff5e4129ac0b45fdaa9a00497b4.dir
+      size: 514
+      nfiles: 1
+    - path: src/augment.py
+      hash: md5
+      md5: a791e3b5678441eb45c6fffdaf4819ac
+      size: 4285
+    params:
+      params.yaml:
+        augment.input_manifest_dir: data/manifests
+        augment.output_audio_dir: data/audio_noisy
+        augment.output_manifest_dir: data/manifests_noisy
+        augment.seed: 42
+        augment.snr_levels:
+        - 20
+        - 10
+        - 5
+        - 0
+        - -5
+        base.languages:
+        - en
+    outs:
+    - path: data/audio_noisy
+      hash: md5
+      md5: cba3a5cceeab5670beed9a46056f1b62.dir
+      size: 1387150
+      nfiles: 10
+    - path: data/manifests_noisy
+      hash: md5
+      md5: 5104b6b4b7846493583700c3525a0219.dir
+      size: 2698
+      nfiles: 5

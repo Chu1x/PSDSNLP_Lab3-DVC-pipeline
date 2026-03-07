@@ -5,3 +5,11 @@ base:
 prepare:
   raw_data_dir: "data/raw"
   output_dir: "data/manifests"
+
+augment:
+  # we start with 5 for testing.
+  snr_levels: [20, 10, 5, 0, -5]
+  seed: 42
+  input_manifest_dir: "data/manifests"
+  output_manifest_dir: "data/manifests_noisy"
+  output_audio_dir: "data/audio_noisy"
