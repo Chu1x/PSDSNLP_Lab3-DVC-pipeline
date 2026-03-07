@@ -15,7 +15,6 @@ from phonemizer.backend import EspeakBackend
 # If running on Linux/Windows, this might not be needed or paths might differ.
 if sys.platform == "darwin":
     os.environ["PHONEMIZER_ESPEAK_LIBRARY"] = "/opt/homebrew/lib/libespeak-ng.dylib"
-# ==========================================
 
 
 def get_audio_md5(file_path):

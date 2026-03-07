@@ -16,6 +16,7 @@ dvc = "*"
 git = "*"
 
 python = "3.11.*"
+protobuf = "*"
 pip = "*"
 
 numpy = "*"

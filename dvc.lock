@@ -10,8 +10,8 @@ stages:
       nfiles: 7
     - path: src/prepare.py
       hash: md5
-      md5: 772c87d0918c29e771da41b451263718
-      size: 4758
+      md5: c8a5052ea09598e570e069f3e4581520
+      size: 4713
     params:
       params.yaml:
         base.languages:
@@ -61,3 +61,63 @@ stages:
       md5: 5104b6b4b7846493583700c3525a0219.dir
       size: 2698
       nfiles: 5
+  transcribe:
+    cmd: python src/transcribe.py
+    deps:
+    - path: data/manifests
+      hash: md5
+      md5: f1a69ff5e4129ac0b45fdaa9a00497b4.dir
+      size: 514
+      nfiles: 1
+    - path: data/manifests_noisy
+      hash: md5
+      md5: 5104b6b4b7846493583700c3525a0219.dir
+      size: 2698
+      nfiles: 5
+    - path: src/transcribe.py
+      hash: md5
+      md5: 49781bde25faa0079b47132d867ea46f
+      size: 3429
+    params:
+      params.yaml:
+        base.languages:
+        - en
+        transcribe.input_dirs:
+        - data/manifests
+        - data/manifests_noisy
+        transcribe.model_name: facebook/wav2vec2-lv-60-espeak-cv-ft
+        transcribe.output_dir: data/predictions
+    outs:
+    - path: data/predictions
+      hash: md5
+      md5: 7baf5dfc50e66a099706ac258da0d41f.dir
+      size: 3680
+      nfiles: 6
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/predictions
+      hash: md5
+      md5: 7baf5dfc50e66a099706ac258da0d41f.dir
+      size: 3680
+      nfiles: 6
+    - path: src/evaluate.py
+      hash: md5
+      md5: 6e0727e2c6bd996694fbc8b4c75e0a94
+      size: 4693
+    params:
+      params.yaml:
+        base.languages:
+        - en
+        evaluate.input_dir: data/predictions
+        evaluate.metrics_file: metrics.json
+        evaluate.plots_dir: plots
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: 0709e4b78fbab31cc7dbbc9a119cf7ef
+      size: 442
+    - path: plots/per_vs_noise.png
+      hash: md5
+      md5: 6f374ef68d5a5fe7eb8fd347db60e296
+      size: 38016

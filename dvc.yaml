@@ -25,4 +25,35 @@ stages:
       - augment.output_audio_dir
     outs:
       - data/manifests_noisy 
-      - data/audio_noisy     
+      - data/audio_noisy    
+
+  transcribe:
+    cmd: python src/transcribe.py
+    deps:
+      - src/transcribe.py
+      - data/manifests 
+      - data/manifests_noisy  
+    params:
+      - base.languages
+      - transcribe.model_name
+      - transcribe.input_dirs
+      - transcribe.output_dir
+    outs:
+      - data/predictions
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - src/evaluate.py
+      - data/predictions
+    params:
+      - base.languages
+      - evaluate.input_dir
+      - evaluate.metrics_file
+      - evaluate.plots_dir
+    metrics:
+      - metrics.json:
+          cache: false
+    plots:
+      - plots/per_vs_noise.png:
+          cache: false
