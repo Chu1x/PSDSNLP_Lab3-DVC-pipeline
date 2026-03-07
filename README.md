@@ -18,5 +18,4 @@ sudo apt install espeak-ng
 
 ## Run pipeline
 
-pixi shell
-dvc repro
+pixi run dvc repro
